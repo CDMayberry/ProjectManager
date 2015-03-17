@@ -13,6 +13,7 @@ To get started, just do the following:
 
 1. Run the project with the "Run Project" button in the menu bar on top of the IDE.
 2. Preview your new app by clicking on the URL that appears in the Run panel below (https://railstest-cdmayberry.c9.io/).
+    (NOTE: that is only for Cloud9, and only on my account, you each will have your own to use)
 
 Happy coding!
 The Cloud9 IDE team
