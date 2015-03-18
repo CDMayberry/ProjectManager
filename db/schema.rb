@@ -11,13 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150317234936) do
+ActiveRecord::Schema.define(version: 20150318154228) do
+
+  create_table "assignments", force: true do |t|
+    t.integer  "projects_id"
+    t.integer  "employees_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "assignments", ["employees_id"], name: "index_assignments_on_employees_id"
+  add_index "assignments", ["projects_id"], name: "index_assignments_on_projects_id"
+
+  create_table "employees", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "projects", force: true do |t|
     t.string   "title"
     t.date     "start_date"
     t.date     "end_date"
-    t.text     "employees"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
