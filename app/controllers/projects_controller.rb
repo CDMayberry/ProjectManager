@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-
+	
 	def index
 		@projects = Project.all
 	end
@@ -7,7 +7,7 @@ class ProjectsController < ApplicationController
 	def show
 		@project = Project.find(params[:id])
 	end
-
+	
 	def new
 		@project = Project.new
 	end
@@ -41,10 +41,11 @@ class ProjectsController < ApplicationController
 	 
 	  redirect_to projects_path
 	end
-
+	
 	private
 		def project_params
 			params.require(:project).permit(:title,:start_date,:end_date,:description, :employee_id)
 		end
 	
 end
+

@@ -28,10 +28,12 @@
     <%= f.label :end_date %><br>
     <%= f.date_field :end_date %>
   </p> 
-  
-  <p>
-    <%= collection_select :project, :employee_ids, Employee.all, :id, :name, {:selected => 1}, {:multiple => true} %>
-  </p>
+    <%= fields_for(@project, @project.assignments) do |u| %>
+      <p>
+        <%= collection_select :project, :employee_ids, Employee.all, :id, :name, {:selected => 1}, {:multiple => true} %>
+      </p>
+    <% end %>
+
   
   <p>
     <%= f.label :description %><br>
@@ -39,7 +41,9 @@
   </p>
  
   <p>
-    <%= f.submit %>
+      <div class="actions">
+       <%= f.submit %>
+     </div>
   </p>
  
 <% end %>
