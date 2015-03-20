@@ -1,7 +1,13 @@
 class ProjectsController < ApplicationController
-	
+
+           
 	def index
 		@projects = Project.all
+		if params[:search]
+    		@projects = Project.search(params[:search]).order("created_at DESC")
+    	else
+    		@projects = Project.order("created_at DESC")
+	 	end
 	end
 
 	def show
@@ -42,10 +48,17 @@ class ProjectsController < ApplicationController
 	  redirect_to projects_path
 	end
 	
+	def search
+		
+	end
+	
 	private
 		def project_params
-			params.require(:project).permit(:title,:start_date,:end_date,:description, :employee_id)
+			params.require(:project).permit(:title,:company,:start_date,:end_date,:description, :employee_id)
 		end
 	
+	def filtering_params(params)
+		params.slice(:title, :company, :search_for)
+	end
 end
 

@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20150318154228) do
 
   create_table "projects", force: true do |t|
     t.string   "title"
+    t.string   "company"
     t.date     "start_date"
     t.date     "end_date"
     t.text     "description"
