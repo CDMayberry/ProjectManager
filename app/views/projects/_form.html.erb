@@ -33,9 +33,10 @@
     <%= f.label :end_date %><br>
     <%= f.date_field :end_date %>
   </p> 
-    <%= fields_for(@project, @project.assignments) do |u| %>
+    <%= form_for[@project, @assignment, @user] do |u| %>
       <p>
-        <%= collection_select :project, :employee_ids, Employee.all, :id, :name, {:selected => 1}, {:multiple => true} %>
+        <%= u.select @user_id, option_from_collection_for_select(@assignment,'id')=>
+       <!--<%= collection_select :project, :user_ids, User.all, :id, {:selected => 1}, {:multiple => true} %>...--> 
       </p>
     <% end %>
 

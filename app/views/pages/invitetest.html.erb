@@ -1,7 +1,12 @@
-<h1>Inviting: hersheybenjamin@gmail.com</h1>
+<html>
+<%= render html: "<h1>Invite people</h1>".html_safe %>
 
-<%= 
-if 3==3
-    render text: "<b>Cool</b>".html_safe
-end
-%>
+<b>Testing</b>
+
+<%= render html: "<br><br>Here we are again!".html_safe %>
+
+<% #User.invite!(email: "hersheybenjamin@gmail.com", name: "Benji H") %>
+    
+</html>
+
+

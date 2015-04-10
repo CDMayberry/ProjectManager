@@ -11,23 +11,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150318154228) do
+ActiveRecord::Schema.define(version: 20150410173909) do
 
   create_table "assignments", force: true do |t|
-    t.integer  "projects_id"
-    t.integer  "employees_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.integer  "user_id"
+    t.integer  "project_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  add_index "assignments", ["employees_id"], name: "index_assignments_on_employees_id"
-  add_index "assignments", ["projects_id"], name: "index_assignments_on_projects_id"
+  add_index "assignments", ["project_id"], name: "index_assignments_on_project_id"
+  add_index "assignments", ["user_id"], name: "index_assignments_on_user_id"
 
   create_table "employees", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "invitations", force: true do |t|
+    t.string   "email"
+    t.string   "role"
+    t.integer  "invitable_id"
+    t.string   "invitable_type"
+    t.integer  "user_id"
+    t.datetime "date_sent"
+    t.datetime "date_accepted"
+    t.string   "claim_hash"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "invitations", ["invitable_id"], name: "index_invitations_on_invitable_id"
+  add_index "invitations", ["invitable_type"], name: "index_invitations_on_invitable_type"
+  add_index "invitations", ["user_id"], name: "index_invitations_on_user_id"
 
   create_table "projects", force: true do |t|
     t.string   "title"
@@ -42,6 +59,8 @@ ActiveRecord::Schema.define(version: 20150318154228) do
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
+    t.string   "first_name",             default: "", null: false
+    t.string   "last_name",              default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"

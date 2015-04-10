@@ -54,11 +54,7 @@ class ProjectsController < ApplicationController
 	
 	private
 		def project_params
-			params.require(:project).permit(:title,:company,:start_date,:end_date,:description, :employee_id)
+			params.require(:project).permit(:title,:company,:start_date,:end_date,:description, :user_id)
 		end
-	
-	def filtering_params(params)
-		params.slice(:title, :company, :search_for)
-	end
 end
 

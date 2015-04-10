@@ -126,6 +126,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  cancancan
   coffee-rails (~> 4.0.0)
   devise
   hirb

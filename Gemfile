@@ -43,3 +43,4 @@ gem 'devise'
 gem 'invitational'
 
 gem 'hirb'
+gem "cancancan"
