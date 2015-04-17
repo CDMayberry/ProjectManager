@@ -8,11 +8,12 @@ class User < ActiveRecord::Base
   has_many :assignments
   has_many :projects, :through => :assignments
   
-  validates :email, :password, :first_name, :last_name, presence: true
+  validates :email, :password, presence: true
+  #validates :first_name, :last_name, presence: true
   validates :email, uniqueness: true
   validates :password, length: { minimum: 8 }
-  validates :first_name, length: { minimum: 2 }
-  validates :last_name, length: { minimum: 2 }
+  #validates :first_name, length: { minimum: 2 }
+  #validates :last_name, length: { minimum: 2 }
 end
 
 

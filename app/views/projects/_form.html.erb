@@ -33,10 +33,11 @@
     <%= f.label :end_date %><br>
     <%= f.date_field :end_date %>
   </p> 
-    <%= form_for[@project, @assignment, @user] do |u| %>
+    <% @users = User.all %>
+    <%= form_for @users do |u| %>
       <p>
-        <%= u.select @user_id, option_from_collection_for_select(@assignment,'id')=>
-       <!--<%= collection_select :project, :user_ids, User.all, :id, {:selected => 1}, {:multiple => true} %>...--> 
+        <%= u.select @user_id, options_from_collection_for_select(@assignment,'id', 'first_name', 'last_name')%>
+        <%= button_tag "Add Team Member", class: "button button--primary" %>
       </p>
     <% end %>
 

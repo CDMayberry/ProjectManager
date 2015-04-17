@@ -1,7 +1,14 @@
 Rails.application.routes.draw do
   
-  devise_for :users
+  devise_for :users, controllers: {
+        sessions: "users/sessions",
+        registrations: "users/registrations",
+        passwords: "users/passwords",
+        confirmations: "users/confirmations"
+  }
   resources :projects
+  resources :assignments
+  resources :users, only: [:index, :show]
 
   get 'pages/index'
   root 'pages#index'
