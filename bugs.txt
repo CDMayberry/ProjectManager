@@ -1,0 +1,8 @@
+Autofilling with a new project creates the project,
+ may want to find a way to delete if the user 
+ decides to back out of the project.
+ On the plus side it will save any progress the
+ user has made.
+ 
+Need to find a way to check if a user is
+ already assigned to the project.

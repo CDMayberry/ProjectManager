@@ -15,6 +15,13 @@ Rails.application.routes.draw do
   
   get 'pages/invitetest'
   
+  #get '/projects/edit_autofill' => 'projects#edit_autofill'
+  get '/projects/add_employee' => 'projects#add_employee'
+  #post '/projects/edit_autofill' => 'projects#edit_autofill', as: 'edit_autofill'
+  get '/projects/autofill' => 'projects#autofill'
+  post '/projects/autofill' => 'projects#autofill', as: 'autofill'
+  get '/autofill' => 'projects#autofill'
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

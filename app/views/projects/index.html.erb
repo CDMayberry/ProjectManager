@@ -6,6 +6,8 @@
     <div class="input-append">
       <strong>Search:</strong> 
       <%= text_field_tag :search, params[:search], class: "span2", placeholder: "Search Projects" %>
+      <%= select_tag :options, options_for_select(["title", "company", "start date", "end date"], params[:options]) %>
+
       <!-- In order to have the "search" icon int the button, we need to use plain HTML instead 
            of using a Rails form helper -->
       <button class="btn" type="submit"><i class="icon-search"></i></button>
@@ -19,7 +21,8 @@
     <th>Company</th>
 	<th>Start date</th>
 	<th>End date</th>
-    <th>Text</th>
+  <th>Description</th>
+  <th>Team Members</th>
   </tr>
  
   <% @projects.each do |project| %>
@@ -40,3 +43,87 @@
 </table>
 
 <%= link_to 'Front Page', '/' %>
+
+<!--<head>-->
+<!--<meta charset="utf-8">-->
+<!--<link rel="stylesheet" type="text/css" href="style.css">-->
+<!--<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto">-->
+<!--<title>Timeline</title>-->
+
+<!--</head>-->
+
+<!--<body>-->
+<!--HEADER SECTION-->
+<!--<div id="header" align = "right">-->
+<!--  <p>&nbsp;</p>-->
+<!--  <p><img src="/assets/heading.png" valign="middle" width="35%" alt=""/></p>-->
+<!--</div>-->
+
+<!--NAVIGATION SECTION-->
+<!--<table id="nav" width="100%" border="0">-->
+<!--  <tbody>-->
+<!--    <tr>-->
+    <!--<th onClick="document.location.href='index.html';" scope="col" id="timelinelink" ></th>-->
+    <!--<th onClick="document.location.href='newproject.html';" scope="col" id="newprojectlink"></th>-->
+    <!--<th onClick="document.location.href='theteam.html';" scope="col" id="theteamlink"></th>-->
+    <!--<th onClick="document.location.href='login.html';" scope="col" id="logoutlink"></th>-->
+<!--    </tr>-->
+<!--  </tbody>-->
+<!--</table>-->
+
+<!--TIMELINE SECTION-->
+
+<!--<div id="overflowbox" style="border:0px ;width:100%;height:400px;overflow-y:hidden;overflow-x:scroll;">-->
+<!--<p style="width:250%;">-->
+
+<!--<div id="virtualbox" width="400px" height="350px"><h3>Virtual Box</h3> <h5>1.01.15<br>1.31.15</h5>-->
+<!--<br>-->
+<!--(+) Dave Goerlich-->
+<!--<br>-->
+<!--(+) Josh Walsh-->
+<!--<br>-->
+<!--(+) Amanda Smith-->
+<!--<br>-->
+<!--(+) Dale Limburg-->
+<!--<br>-->
+<!--(+) Tim Proctor-->
+<!--</div>-->
+<!--<div width="400px" height="350px" id="boxcast"><h3>Boxcast</h3> <h5>1.01.15<br>1.31.15</h5>-->
+<!--<br>-->
+<!--(+) Dave Goerlich-->
+<!--<br>-->
+<!--(+) Josh Walsh-->
+<!--<br>-->
+<!--(+) Amanda Smith-->
+<!--<br>-->
+<!--(+) Dale Limburg-->
+<!--<br>-->
+<!--(+) Tim Proctor</div>-->
+<!--<div width="400px" height="350px" id="scout"><h3>Scout</h3> <h5>1.01.15<br>1.31.15</h5>-->
+<!--<br>-->
+<!--(+) Dave Goerlich-->
+<!--<br>-->
+<!--(+) Josh Walsh-->
+<!--<br>-->
+<!--(+) Amanda Smith-->
+<!--<br>-->
+<!--(+) Dale Limburg-->
+<!--<br>-->
+<!--(+) Tim Proctor</div>-->
+<!--<div width="400px" height="350px" id="campbuilder"><h3>Camp Builder</h3><h5>1.01.15<br>1.31.15</h5>-->
+<!--<br>-->
+<!--(+) Dave Goerlich-->
+<!--<br>-->
+<!--(+) Josh Walsh-->
+<!--<br>-->
+<!--(+) Amanda Smith-->
+<!--<br>-->
+<!--(+) Dale Limburg-->
+<!--<br>-->
+<!--(+) Tim Proctor</div>-->
+
+
+<!--</p>-->
+<!--</div>-->
+
+<!--</body>-->

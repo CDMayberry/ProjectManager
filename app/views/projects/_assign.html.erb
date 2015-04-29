@@ -1,0 +1,15 @@
+
+<li class="control-group nested-fields">
+    <!--<div class="notice">Pre-Test of assignments</div>-->
+   <%= f.fields_for @assignment do |assign| %>
+    <div>
+      <%= assign.label "Team Member" %>
+      <%= assign.collection_select :user_id, @users, :id, :last_name, {:prompt   => "Select a Employee"} %>
+      <%= hidden_field_tag :user_id, :id %>
+      <!--%= @assignment.user_id = :user_id %>-->
+      
+      <%= submit_tag "Add Team Member", :name => 'assign_button', class: "button button--primary" %>
+    </div>
+  <% end %>
+
+</li>

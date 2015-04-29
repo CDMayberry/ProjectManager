@@ -23,8 +23,12 @@
 </p> 
 
  <p>
-  <strong>Employees:</strong>
-  <%= @project.employees %>
+  <strong>Team Members:</strong>
+     <% @assignments.each do |assign| %>
+       <li>
+          <%= @users.find(assign.user_id).last_name %>
+        </li>
+    <% end %>
 </p> 
  
 <p>

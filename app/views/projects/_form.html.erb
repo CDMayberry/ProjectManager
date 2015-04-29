@@ -1,56 +1,84 @@
 <%= form_for @project do |f| %>
- 
-  <% if @project.errors.any? %>
-    <div id="error_explanation">
-      <h2>
-        <%= pluralize(@project.errors.count, "error") %> prohibited
-        this project from being saved:
-      </h2>
-      <ul>
-        <% @project.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
+  
+  <% if flash[:message] %>
+    <div class="notice"><%= flash[:message] %></div>
   <% end %>
- 
-  <p>
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
-  </p>
-  
-  <p>
-    <%= f.label :company %><br>
-    <%= f.text_field :company %>
-  </p>
-  
-  <p>
-    <%= f.label :start_date %><br>
-    <%= f.date_field :start_date %>
-  </p>
-  
-   <p>
-    <%= f.label :end_date %><br>
-    <%= f.date_field :end_date %>
-  </p> 
-    <% @users = User.all %>
-    <%= form_for @users do |u| %>
-      <p>
-        <%= u.select @user_id, options_from_collection_for_select(@assignment,'id', 'first_name', 'last_name')%>
-        <%= button_tag "Add Team Member", class: "button button--primary" %>
-      </p>
+  <% if flash[:ben_message] %>
+    <div class="notice">ben_message: --<%= flash[:ben_message] %>--</div>
+  <% end %>
+   
+    <% if @project.errors.any? %>
+      <div id="error_explanation">
+        <h2>
+          <%= pluralize(@project.errors.count, "error") %> prohibited
+          this project from being saved:
+        </h2>
+        <ul>
+          <% @project.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
     <% end %>
+    
+    <%= hidden_field_tag :duration, "10" %>
+    
+    <p>
+      <%= f.label :title %><br>
+      <%= f.text_field :title %>
+    </p>
+    
+    <p>
+      <%= f.label :company %><br>
+      <%= f.text_field :company %>
+    </p>
+    
+    <p>
+      <%= f.label :start_date %><br>
+      <%= f.date_field :start_date %>
+    </p>
+    
+     <p>
+      <%= f.label :end_date %><br>
+      <%= f.date_field :end_date %>
+    </p> 
+    
+    <p>
+      <%= label_tag "Duration (days)" %><br>
+      <%= number_field_tag :duration %>
+      
+      
+      
+    </p>
 
+  <p>
+  <table>     
   
-  <p>
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
+   <% @assignments.each do |assign| %>
+       <tr>
+          <td><%= "Team Member: " %>
+          <%= @users.find(assign.user_id).last_name %>
+          <!--%= submit_tag 'Destroy', :name => 'remove_button', :value => assign.id, data: { confirm: 'Are you sure?' } %>-->
+     		  <%= image_submit_tag("fileclose.png", :name =>'remove_button', :value => assign.id) %> </td> 
+        </tr>
+    <% end %>
+  
+  </table>
+  
+  <%= render partial: "assign", locals: { f: f } %>
+  
   </p>
- 
-  <p>
-      <div class="actions">
-       <%= f.submit %>
-     </div>
-  </p>
- 
+  
+
+    <p>
+        <%= f.label :description %><br>
+        <%= f.text_area :description %>
+    </p>
+   
+    <p>
+        <%= f.submit %>
+        
+        <%= f.submit 'Autofill' %>
+    </p>
+
 <% end %>

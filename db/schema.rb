@@ -23,12 +23,6 @@ ActiveRecord::Schema.define(version: 20150410173909) do
   add_index "assignments", ["project_id"], name: "index_assignments_on_project_id"
   add_index "assignments", ["user_id"], name: "index_assignments_on_user_id"
 
-  create_table "employees", force: true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "invitations", force: true do |t|
     t.string   "email"
     t.string   "role"

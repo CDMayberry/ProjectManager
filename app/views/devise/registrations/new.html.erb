@@ -10,7 +10,9 @@
 
   <div class="field">
     <%= f.label :password %>
-    <em>(8 characters minimum)</em> <br />
+    <% if @validatable %>
+    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %><br />
     <%= f.password_field :password, autocomplete: "off" %>
   </div>
 
@@ -20,15 +22,13 @@
   </div>
   
   <div class="field">
-    <%= f.label :first_name %>
-    <em>(2 characters minimum) </em><br />
-    <%= f.text_field :first_name%>
+    <%= f.label :first_name %><br />
+    <%= f.text_field :first_name, autofocus: true %>
   </div>
   
   <div class="field">
-    <%= f.label :last_name %>
-    <em>(2 characters minimum )</em><br />
-    <%= f.text_field :last_name%>
+    <%= f.label :last_name %><br />
+    <%= f.text_field :last_name, autofocus: true %>
   </div>
 
   <div class="actions">

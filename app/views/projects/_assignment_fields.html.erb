@@ -1,0 +1,26 @@
+
+<li class="control-group nested-fields">
+    <div class="notice">Pre-Test of assignments</div>
+  <% if @assignments %>
+    <div class="notice">Test of assignments</div>
+     <% @assignments.each do |assign| %>
+       < "Employee" >
+       <%= assign.user_id %>
+     <% end %>
+  <% end %>
+  
+  <!--<div class = "controls">-->
+    <!--%= form_for @assignment do |g| %-->
+    <!--  %= g.label "Employee" %>-->
+    <!--  %= g.user_id %>-->
+    <!--% end %>-->
+  <!--</div>-->
+  
+  <div class = "controls">
+    <!--%= f.fields_for :assignment, Assignment.new do |assignment_user %>-->
+    <!--  %= assignment_user.label "Employee" %>-->
+    <!--  %= assignment_user.collection_select :user_id, @users, :id, :last_name, {:prompt   => "Select a Employee"} %>-->
+    <!--  %= submit_tag "Add Employee", :name => 'assign_button', class: "button button--primary" %>-->
+    <!--% end %>-->
+  </div>
+</li>
