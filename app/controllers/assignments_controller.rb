@@ -17,15 +17,16 @@ class AssignmentsController < ApplicationController
 		@assignment = Assignment.new(assignment_params)
 		#@project = Project.new(project_params)
 
-		if @assignment.save
+		#Don't save the assignment until the project is saved
+		#if @assignment.save
 			
 			#self.autofill
 			#flash[:notice] = "Autofilling project"
 			
-		else
+		#else
 			#flash[:notice] = "Successfully created project."
 			#redirect_to @assignment
-		end
+		#end
 		
 		
 	end

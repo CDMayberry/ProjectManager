@@ -1,84 +1,128 @@
-<%= form_for @project do |f| %>
+<body>
+  <!--HEADER SECTION-->
+  <div id="header" align = "right">
+    <p>&nbsp;</p>
+    <p><img src="/assets/heading.png" valign="middle" width="35%" alt=""/></p>
+  </div>
   
-  <% if flash[:message] %>
-    <div class="notice"><%= flash[:message] %></div>
-  <% end %>
-  <% if flash[:ben_message] %>
-    <div class="notice">ben_message: --<%= flash[:ben_message] %>--</div>
-  <% end %>
-   
-    <% if @project.errors.any? %>
-      <div id="error_explanation">
-        <h2>
-          <%= pluralize(@project.errors.count, "error") %> prohibited
-          this project from being saved:
-        </h2>
-        <ul>
-          <% @project.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
+  <!--NAVIGATION SECTION-->
+  <table id="nav" width="100%" border="0">
+    <tbody>
     
-    <%= hidden_field_tag :duration, "10" %>
+      <tr>
+      <!--<th onClick="document.location.href='/projects/index';" scope="col" id="timelinelink" ></th>-->
+      <!--<th onClick="document.location.href='/projects/new';" scope="col" id="newprojectlink"></th>-->
+      <th scope="col" id="timelinelink"><%= link_to 'Timeline', projects_path(@projects)%></th>
+      <th scope="col" id="newprojectlink"><%= link_to 'New Project', new_project_path(@projects)%></th>
+      <!--<th onClick="document.location.href='theteam.html';" scope="col" id="theteamlink"></th>-->
+      <!--<th onClick="document.location.href='/projects/new';" scope="col" id="logoutlink"></th>-->
+      </tr>
     
-    <p>
-      <%= f.label :title %><br>
-      <%= f.text_field :title %>
-    </p>
-    
-    <p>
-      <%= f.label :company %><br>
-      <%= f.text_field :company %>
-    </p>
-    
-    <p>
-      <%= f.label :start_date %><br>
-      <%= f.date_field :start_date %>
-    </p>
-    
-     <p>
-      <%= f.label :end_date %><br>
-      <%= f.date_field :end_date %>
-    </p> 
-    
-    <p>
-      <%= label_tag "Duration (days)" %><br>
-      <%= number_field_tag :duration %>
-      
-      
-      
-    </p>
-
-  <p>
-  <table>     
-  
-   <% @assignments.each do |assign| %>
-       <tr>
-          <td><%= "Team Member: " %>
-          <%= @users.find(assign.user_id).last_name %>
-          <!--%= submit_tag 'Destroy', :name => 'remove_button', :value => assign.id, data: { confirm: 'Are you sure?' } %>-->
-     		  <%= image_submit_tag("fileclose.png", :name =>'remove_button', :value => assign.id) %> </td> 
-        </tr>
-    <% end %>
-  
+    </tbody>
   </table>
-  
-  <%= render partial: "assign", locals: { f: f } %>
-  
-  </p>
-  
 
-    <p>
-        <%= f.label :description %><br>
-        <%= f.text_area :description %>
-    </p>
-   
-    <p>
-        <%= f.submit %>
+  <div id="newprojectbox">
+  
+   <%= form_for @project, as: :project, html: { class: "edit_project", id: "form1" } do |f| %>
+      <% if flash[:message] %>
+        <div class="notice"><%= flash[:message] %></div>
+      <% end %>
+      <% if flash[:ben_message] %>
+        <div class="notice">ben_message: <%= flash[:ben_message] %></div>
+      <% end %>
+         <% if @project.errors.any? %>
+          <div id="error_explanation">
+            <h2>
+              <%= pluralize(@project.errors.count, "error") %> prohibited
+              this project from being saved:
+            </h2>
+            <ul>
+              <% @project.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %> 
         
-        <%= f.submit 'Autofill' %>
-    </p>
+        
+        <% if @user_array %>
+         <% @user_array.each do |user| %>
+            <%= hidden_field_tag 'assignees[]', user %>
+         <% end %>
+        <% end %>
+    
+       <%= hidden_field_tag :duration, "10" %>
+     <br>
+     <h3>NEW PROJECT</h3>
+        <table align="center" width="25%" border="0">
+          <tbody>
+            <tr>
+              <td align="left" scope="col"><%= f.label "Project" %></td>
+              <td align="left" scope="col"><%= f.text_field :title %></td>
+            </tr>
+            <tr>
+              <td align="left" scope="col"><%= f.label :company %></td>
+              <td align="left" scope="col"><%= f.text_field :company %></td>
+            </tr>
+            <tr>  
+              <td align="left" scope="col"><%= f.label :start_date %></td>
+              <td align="left" scope="col"><%= f.date_field :start_date %></td>
+            </tr>
+            <tr>
+              <td align="left" scope="col"><%= f.label :end_date %></td>
+              <label for="textarea2"></label></td>
+              <td align="left" scope="col"><%= f.date_field :end_date %></td>
+            </tr>
+            <tr>
+              <td align="left" scope="col"><%= label_tag "Duration (days)"%></td>
+              <td align="left" scope="col"> <%= number_field_tag :duration %></td>
+              <td align="left" scope="col"> <%= f.submit 'Autofill' %></td>
+            </tr>
+            <tr>
+              <td align="left" scope="col"><%= f.label :description %></td>
+              <td align="left" scope="col"><%= f.text_area :description %></td>
+            </tr>
+            <tr>
+              <td align="left">Team Members:</td>
+              <td align="left">
+                <!--% @assignments.each do |assign| %>-->
+                <% for x_user in @user_array do %>
+                  <label>
+                  <%= @users.find(x_user).last_name %>
+       		        <%= image_submit_tag("fileclose.png", :name =>'remove_member', :value => x_user, width: "16px", height: "16px") %><br>
+                  </label>
+                <% end %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <label for="textfield"><br>
+          
+        </label>
+        <label for="date2">
+      </label>
+        <label for="textarea">
+      </label>
+      
+      <!--<div class="field">-->
+        <!--%= f.label :zedonk %><br />-->
+        <!--= text_field_tag :zedonk %>-->
+      <!--</div>-->
+      
+      <%= render partial: "assign", locals: { f: f } %>
+      
 
-<% end %>
+      
+      <!--<p>-->
+        <!--%= image_submit_tag("save-01.png", width: "150px", height: "40px", :name => 'commit') %> -->
+        <!--<input width="150px" height="40px" type="image" name="imageField" id="imageField" src="/assets/save-01.png">-->
+      <!--</p>-->
+      <p>
+      <%= f.submit nil, :type => :image, :src => "/assets/save-01.png", width: "150px", height: "40px" %>
+      </p>
+    <% end %>
+    <!--</form>-->
+    
+
+  </div>
+</body>

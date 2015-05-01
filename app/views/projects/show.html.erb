@@ -1,40 +1,99 @@
-<h1>Created project:
-<%= @project.title %>
-</h1>
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto">
+<title>New Project</title>
 
-<p>
-  <strong>Title:</strong>
-  <%= @project.title %>
-</p>
+</head>
 
-<p>
-  <strong>Company:</strong>
-  <%= @project.company %>
-</p>
- 
- <p>
-  <strong>Start date:</strong>
-  <%= @project.start_date %>
-</p>
- 
- <p>
-  <strong>End date:</strong>
-  <%= @project.end_date %>
-</p> 
+<body>
+<!--HEADER SECTION-->
+<div id="header" align = "right">
+  <p>&nbsp;</p>
+  <p><img src="/assets/heading.png" valign="middle" width="35%" alt=""/></p>
+</div>
 
- <p>
-  <strong>Team Members:</strong>
-     <% @assignments.each do |assign| %>
-       <li>
-          <%= @users.find(assign.user_id).last_name %>
-        </li>
-    <% end %>
-</p> 
- 
-<p>
-  <strong>Text:</strong>
-  <%= @project.description %>
-</p>
+<!--NAVIGATION SECTION-->
+<table id="nav" width="100%" border="0">
+  <tbody>
+    <tr>
+      <th scope="col" id="timelinelink"><%= link_to 'Timeline', projects_path(@projects)%></th>
+      <th scope="col" id="newprojectlink"><%= link_to 'New Project', new_project_path(@projects)%></th>
+    </tr>
+  </tbody>
+</table>
 
-<%= link_to 'Back', projects_path %>
-<%= link_to 'Edit', edit_project_path(@project) %>
+<div id="newprojectbox">
+  <%= form_for @project, as: :project, html: { class: "edit_project", id: "form1" } do |f| %>
+     <br>
+     <h3>VIEW PROJECT</h3>
+        <table align="center" width="60%" border="0">
+          <tbody>
+            <tr>
+              <td align="left" scope="col"><strong>Project:</strong> </td>
+              <td align="left" scope="col"><%= @project.title %></td>
+              <!--<td align="left" scope="col">Project Name:</td>-->
+              <!--<td align="left" scope="col"><input name="textfield" type="text" required id="textfield" size="16px"></td>-->
+            </tr>
+            <tr>
+              <td align="left" scope="col"><strong>Company:</strong> </td>
+              <td align="left" scope="col"><%= @project.company %></td>
+            </tr>
+            <tr>  
+              <td align="left" scope="col"><strong>Start Date:</strong> </td>
+              <td align="left" scope="col"><%= @project.start_date %></td>
+              <!--<td align="left"><label for="date">Start Date:</label></td>-->
+              <!--<td align="left"><input name="date"  type="date" required id="date"></td>-->
+            </tr>
+            <tr>
+              <td align="left" scope="col"><strong>End Date:</strong></td>
+              <label for="textarea2"></label></td>
+              <td align="left" scope="col"><%= @project.end_date %></td>
+              <!--<td align="left"><label for="date3">End Date:</label>-->
+              
+              <!--<td align="left"><input name="date2" type="date" required id="date2"></td>-->
+            </tr>
+            <tr>
+              <td align="left" scope="col"><strong> Description:</strong> </td>
+              <td align="left"><%= @project.description %></td>
+              <!--<td align="left"><label for="textarea3">About Project:</label></td>-->
+              <!--<td align="left"><textarea name="textarea" required id="textarea"></textarea></td>-->
+            </tr>
+            <tr>
+              <td align="left"><strong>Team Members:</strong></td>
+              <td align="left">
+                 <% @assignments.each do |assign| %>
+                <label>
+                 
+                  <%= @users.find(assign.user_id).first_name %> <%= @users.find(assign.user_id).last_name %><br>
+       		        <!--%= image_submit_tag("fileclose.png", :name =>'remove_member', :value => assign.id, width: "16px", height: "16px") %><br>-->
+                </label>
+                <% end %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <label for="textfield"><br>
+          
+        </label>
+        <label for="date2">
+      </label>
+        <label for="textarea">
+      </label>
+      
+      <p>
+        <%= link_to 'Edit', edit_project_path(@project) %>
+      </p>
+  		<p><%= link_to 'Destroy', project_path(@project),
+          method: :delete,
+          data: { confirm: 'Are you sure?' } %>
+      </p>
+
+  <% end %>
+</div>
+</body>
+</html>
+
+<!--%= link_to 'Back', projects_path %>-->

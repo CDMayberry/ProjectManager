@@ -1,129 +1,57 @@
-<h1>Listing projects</h1>
- 
- <p>
- 
-   <%= form_tag(projects_path, :method => "get", class: "navbar-form", id: "search-form") do %>
-    <div class="input-append">
-      <strong>Search:</strong> 
-      <%= text_field_tag :search, params[:search], class: "span2", placeholder: "Search Projects" %>
-      <%= select_tag :options, options_for_select(["title", "company", "start date", "end date"], params[:options]) %>
+<!doctype html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto">
+  <title>Timeline</title>
+  
+  </head>
 
-      <!-- In order to have the "search" icon int the button, we need to use plain HTML instead 
-           of using a Rails form helper -->
-      <button class="btn" type="submit"><i class="icon-search"></i></button>
-    </div>
-    <% end %>
-</p>
- 
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Company</th>
-	<th>Start date</th>
-	<th>End date</th>
-  <th>Description</th>
-  <th>Team Members</th>
-  </tr>
- 
-  <% @projects.each do |project| %>
-    <tr>
-		<td><%= project.title %></td>
-		<td><%= project.company %></td>
-		<td><%= project.start_date %></td>
-		<td><%= project.end_date %></td>
-		<td><%= project.description %></td>
-		<td><%= link_to 'Show', project_path(project) %></td>
-		<td><%= link_to 'Edit', edit_project_path(project) %></td>
-		<td><%= link_to 'Destroy', project_path(project),
-              method: :delete,
-              data: { confirm: 'Are you sure?' } %></td>
-	  
+  
+  <body>
+  <!--HEADER SECTION-->
+  <div id="header" align = "right">
+    <p>&nbsp;</p>
+    <p><img src="\assets\heading.png" valign="middle" width="35%" alt=""/></p>
+  </div>
+  
+  <!--NAVIGATION SECTION-->
+  <table id="nav" width="100%" border="0">
+    <tbody>
+      <tr>
+      <th scope="col" id="timelinelink"><%= link_to 'Timeline', projects_path(@projects)%></th>
+      <th scope="col" id="newprojectlink"><%= link_to 'New Project', new_project_path(@projects)%></th>
     </tr>
-  <% end %>
-</table>
-
-<%= link_to 'Front Page', '/' %>
-
-<!--<head>-->
-<!--<meta charset="utf-8">-->
-<!--<link rel="stylesheet" type="text/css" href="style.css">-->
-<!--<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto">-->
-<!--<title>Timeline</title>-->
-
-<!--</head>-->
-
-<!--<body>-->
-<!--HEADER SECTION-->
-<!--<div id="header" align = "right">-->
-<!--  <p>&nbsp;</p>-->
-<!--  <p><img src="/assets/heading.png" valign="middle" width="35%" alt=""/></p>-->
-<!--</div>-->
-
-<!--NAVIGATION SECTION-->
-<!--<table id="nav" width="100%" border="0">-->
-<!--  <tbody>-->
-<!--    <tr>-->
-    <!--<th onClick="document.location.href='index.html';" scope="col" id="timelinelink" ></th>-->
-    <!--<th onClick="document.location.href='newproject.html';" scope="col" id="newprojectlink"></th>-->
-    <!--<th onClick="document.location.href='theteam.html';" scope="col" id="theteamlink"></th>-->
-    <!--<th onClick="document.location.href='login.html';" scope="col" id="logoutlink"></th>-->
-<!--    </tr>-->
-<!--  </tbody>-->
-<!--</table>-->
-
-<!--TIMELINE SECTION-->
-
-<!--<div id="overflowbox" style="border:0px ;width:100%;height:400px;overflow-y:hidden;overflow-x:scroll;">-->
-<!--<p style="width:250%;">-->
-
-<!--<div id="virtualbox" width="400px" height="350px"><h3>Virtual Box</h3> <h5>1.01.15<br>1.31.15</h5>-->
-<!--<br>-->
-<!--(+) Dave Goerlich-->
-<!--<br>-->
-<!--(+) Josh Walsh-->
-<!--<br>-->
-<!--(+) Amanda Smith-->
-<!--<br>-->
-<!--(+) Dale Limburg-->
-<!--<br>-->
-<!--(+) Tim Proctor-->
-<!--</div>-->
-<!--<div width="400px" height="350px" id="boxcast"><h3>Boxcast</h3> <h5>1.01.15<br>1.31.15</h5>-->
-<!--<br>-->
-<!--(+) Dave Goerlich-->
-<!--<br>-->
-<!--(+) Josh Walsh-->
-<!--<br>-->
-<!--(+) Amanda Smith-->
-<!--<br>-->
-<!--(+) Dale Limburg-->
-<!--<br>-->
-<!--(+) Tim Proctor</div>-->
-<!--<div width="400px" height="350px" id="scout"><h3>Scout</h3> <h5>1.01.15<br>1.31.15</h5>-->
-<!--<br>-->
-<!--(+) Dave Goerlich-->
-<!--<br>-->
-<!--(+) Josh Walsh-->
-<!--<br>-->
-<!--(+) Amanda Smith-->
-<!--<br>-->
-<!--(+) Dale Limburg-->
-<!--<br>-->
-<!--(+) Tim Proctor</div>-->
-<!--<div width="400px" height="350px" id="campbuilder"><h3>Camp Builder</h3><h5>1.01.15<br>1.31.15</h5>-->
-<!--<br>-->
-<!--(+) Dave Goerlich-->
-<!--<br>-->
-<!--(+) Josh Walsh-->
-<!--<br>-->
-<!--(+) Amanda Smith-->
-<!--<br>-->
-<!--(+) Dale Limburg-->
-<!--<br>-->
-<!--(+) Tim Proctor</div>-->
-
-
-<!--</p>-->
-<!--</div>-->
-
-<!--</body>-->
+    </tbody>
+  </table>
+  
+  <!--TIMELINE SECTION-->
+  
+    <div id="overflowbox" style="border:0px ;width:100%;height:400px;">
+     <p>
+     <%= form_tag(projects_path, :method => "get", class: "search", id: "search-form") do %>
+        <div class="input-append">
+          <strong>Search:</strong> 
+          <%= text_field_tag :search, params[:search], class: "span2", placeholder: "Search Projects" %>
+          <%= select_tag :options, options_for_select(["title", "company", "start date", "end date"], params[:options]) %>
+    
+          <!-- In order to have the "search" icon int the button, we need to use plain HTML instead 
+               of using a Rails form helper -->
+          <button class="btn" type="submit"><i class="icon-search"></i></button>
+        </div>
+      <% end %>
+      </p>
+      <p style="width:100%;">
+        <% @projects.each do |project| %>
+        <div id=company width="400px" height="350px">
+      		<h3><%= project.company %></h3>
+      		<h4><%= link_to project.title, project_path(project) %></h4>
+      		<h5><%= project.start_date %><br><%= project.end_date %></h5>
+        </div>
+        <% end %>
+      </p>
+    </div>
+  
+  </body>
+</html>

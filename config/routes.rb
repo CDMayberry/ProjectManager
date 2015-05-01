@@ -10,10 +10,10 @@ Rails.application.routes.draw do
   resources :assignments
   resources :users, only: [:index, :show]
 
-  get 'pages/index'
-  root 'pages#index'
+  #get 'pages/index'
+  root 'projects#index'
   
-  get 'pages/invitetest'
+  #get 'pages/invitetest'
   
   #get '/projects/edit_autofill' => 'projects#edit_autofill'
   get '/projects/add_employee' => 'projects#add_employee'

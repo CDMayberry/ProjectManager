@@ -1,6 +1,27 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto">
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+</head>
+
+<body>
+<!--HEADER SECTION-->
+<div id="header" align = "right">
+  <p>&nbsp;</p>
+  <p><img src="/assets/heading.png" valign="middle" width="35%" alt=""/></p>
+</div><br><br>
+
+<div id="main">
+
+
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "edit_user", id: "form1"  }) do |f| %>
+  
+  <h2>Edit <%= resource_name.to_s.humanize %></h2>
+  
   <%= devise_error_messages! %>
 
   <div class="field">
@@ -42,10 +63,21 @@
   <div class="actions">
     <%= f.submit "Update" %>
   </div>
+  
+  <h4>Cancel my account</h4>
+
+  <p><%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
+  
+  <p>
+    <%= link_to "Back", :back %>
+  </p>
+  
+  
 <% end %>
 
-<h3>Cancel my account</h3>
 
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
 
-<%= link_to "Back", :back %>
+
+</div>
+</body>
+</html>

@@ -1,39 +1,75 @@
-<h2>Sign up</h2>
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto">
+<title>Register</title>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
+</head>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
+<body>
+<!--HEADER SECTION-->
+<div id="header" align = "right">
+  <p>&nbsp;</p>
+  <p><img src="/assets/heading.png" valign="middle" width="35%" alt=""/></p>
+</div><br><br>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @validatable %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
+<div id="main">
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "edit_user", id: "form1" }) do |f| %>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
-  
-  <div class="field">
-    <%= f.label :first_name %><br />
-    <%= f.text_field :first_name, autofocus: true %>
-  </div>
-  
-  <div class="field">
-    <%= f.label :last_name %><br />
-    <%= f.text_field :last_name, autofocus: true %>
-  </div>
+<br>
+<h3>NEW EMPLOYEE</h3>
+
+<%= devise_error_messages! %>
+
+<table width="30%" align="center" border="0">
+  <tbody>
+    <tr>
+      <td align="left" scope="col"><%= f.label :email %><br /></td>
+      <td align="left" scope="col"><%= f.email_field :email, autofocus: true %></td>
+    </tr>
+    <tr>
+      <td align="left" ><%= f.label :password %></td>
+      <td align="left" >
+        <% if @validatable %>
+          <em>(<%= @minimum_password_length %> characters minimum)</em>
+        <% end %><br />
+        <%= f.password_field :password, autocomplete: "off" %></td>
+    </tr>
+    <tr>
+      <td align="left" ><%= f.label :password_confirmation %><br /></td>
+      <td align="left" ><%= f.password_field :password_confirmation, autocomplete: "off" %></td>
+    </tr>
+    <tr>
+      <td align="left" ><%= f.label :first_name %><br /></td>
+      <td align="left" ><%= f.text_field :first_name, autofocus: true %></td>
+    </tr>
+    <tr>
+      <td align="left" ><%= f.label :last_name %><br /></td>
+      <td align="left" ><%= f.text_field :last_name, autofocus: true %></td>
+    </tr>
+    <tr>
+      <td align="left" >Status:</td>
+      <td align="left" ><select name="select" required id="select">
+        <option>Full Time</option>
+        <option>Part Time</option>
+      </select></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+
 
   <div class="actions">
-    <%= f.submit "Sign up" %>
+     <%= f.submit nil, :type => :image, :src => "/assets/register-01.png", width: "150px", height: "40px" %>
   </div>
-<% end %>
+
 
 <%= render "devise/shared/links" %>
+<% end %>
+
+
+</div>
+</body>
+</html>

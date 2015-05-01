@@ -1,16 +1,37 @@
-<h2>Log in</h2>
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto">
+<title>Login</title>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
+</head>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
+<body>
+<!--HEADER SECTION-->
+<div id="header" align = "right">
+  <p>&nbsp;</p>
+  <p><img src="/assets/heading.png" valign="middle" width="35%" alt=""/></p>
+</div><br><br>
 
+<div id="main">
+<!--<form id="form1" name="form1" method="post">-->
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "login_user", id: "form1" }) do |f| %>
+  
+  <br><br><table width="30%" border="0" align="center" id="logintable">
+    <tbody>
+      <tr>
+        <th scope="col"><img src="/assets/Email.png" width="100" height="100" alt=""/></th>
+        <th scope="col"><%= f.email_field :email, autofocus: true %></th>
+      </tr>
+      <tr>
+        <td><img src="/assets/Password.png" width="100" height="100" alt=""/></td>
+        <td><%= f.password_field :password, autocomplete: "off" %></td>
+      </tr>
+      
+    </tbody>
+  </table><br><br><br>
   <% if devise_mapping.rememberable? -%>
     <div class="field">
       <%= f.check_box :remember_me %>
@@ -19,8 +40,17 @@
   <% end -%>
 
   <div class="actions">
-    <%= f.submit "Log in" %>
+    <%= f.submit nil, :type => :image, :src => "/assets/login-01.png", width: "150px", height: "40px" %>
+    <%= render "devise/shared/links" %>
   </div>
+  
+  
+  
 <% end %>
 
-<%= render "devise/shared/links" %>
+</div>
+</body>
+</html>
+
+
+
