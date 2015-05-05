@@ -1,10 +1,51 @@
 class ProjectsController < ApplicationController
 	include ApplicationHelper
 	
-           
+	
+	#Function to interpret date according to a variety of common formats
+	def interpretDate(dateString)
+		
+		begin
+		
+		if (dateString =~ /^\d\d?\/\d\d?\/(\d\d)$/ )
+		    #puts "Format: m/d/y"
+		    searchDate = Date.strptime(dateString, '%m/%d/%y')
+		elsif (dateString =~ /^\d\d?\/\d\d?\/(\d\d\d\d)$/ )
+		    #puts "Format: m/d/Y"
+		    searchDate = Date.strptime(dateString, '%m/%d/%Y')
+		elsif (dateString =~ /^\d\d?\.\d\d?\.(\d\d)$/ )
+		    #puts "Format: m.d.y"
+		    searchDate = Date.strptime(dateString, '%m.%d.%y')
+		elsif (dateString =~ /^\d\d?\.\d\d?\.(\d\d\d\d)$/ )
+		    #puts "Format: m.d.Y"
+		    searchDate = Date.strptime(dateString, '%m.%d.%Y')
+		elsif (dateString =~ /^\d\d?\-\d\d?\-(\d\d)$/ )
+		    #puts "Format: m-d-y"
+		    searchDate = Date.strptime(dateString, '%m-%d-%y')
+		elsif (dateString =~ /^\d\d?\-\d\d?\-(\d\d\d\d)$/ )
+		    #puts "Format: m-d-Y"
+		    searchDate = Date.strptime(dateString, '%m-%d-%Y')
+		else
+			flash[:message] = "Unrecognized date format. Use mm.dd.yy or mm.dd.yyyy."
+		    return nil
+		end
+		
+		rescue ArgumentError => bang
+			flash[:message] = "Invalid date. (Use month first, then day, then year)."
+			return nil
+		end
+		
+		
+	end
+	
+	
+	
+	
+	           
 	def index
 		@projects = Project.all
 		if params[:search] && params[:search] != ""
+			
 			#flash[:notice] = params[:options]
     		#@projects = Project.where(params[:options] "=" params[:search] )
     		if params[:options] == "title"
@@ -14,10 +55,18 @@ class ProjectsController < ApplicationController
     			@projects = Project.company(params[:search]).order("start_date ASC")
     		end
     		if params[:options] == "start date"
-    			@projects = Project.datestart(params[:search]).order("start_date ASC")
+    			tempDate = interpretDate(params[:search])
+    			if tempDate == nil
+    				return
+    			end
+    			@projects = Project.datestart(tempDate.strftime("%Y-%m-%d")).order("start_date ASC")
     		end
     		if params[:options] == "end date"
-    			@projects = Project.dateend(params[:search]).order("start_date ASC")
+    			tempDate = interpretDate(params[:search])
+    			if tempDate == nil
+    				return
+    			end
+    			@projects = Project.dateend(tempDate.strftime("%Y-%m-%d")).order("start_date ASC")
     		end
     	else
     		@projects = Project.order("start_date ASC")
@@ -66,59 +115,62 @@ class ProjectsController < ApplicationController
 		@project.description = project_params[:description]
 		@user_array = params[:assignees]
 		
-		
-		
-		duration = params[:duration].to_i	
-		schedule_date = 0	#The to-be-scheduled start date
-		
-		#Copy all project start and end times to a new array
-		#Only include projects with team member overlap
-		sortedProjects = []
-		@projects.length.times do |i|
+		if params[:duration].to_s == ""
+			flash[:message] = "No duration specified."
+		else
+			duration = params[:duration].to_i	
+			schedule_date = 0	#The to-be-scheduled start date
 			
-			
-			temp_array = []
-			@assignments.each do |set|
-				temp_array << set.user_id
-			
-				if (temp_array & @user_array).size() > 0
+			#Copy all project start and end times to a new array
+			#Only include projects with team member overlap
+			sortedProjects = []
+			@projects.length.times do |i|	#For each project,
+				
+				#Assignments for this particular project
+				assignments = Assignment.project(@projects[i].id)
+				
+				#Enumerate the members on the project
+				temp_array = []
+				assignments.each_with_index do |set,i|
+					temp_array << set.user_id.to_s	#Must convert to string for compatibility
+				end
+				
+				#If members overlap with new project, consider it a conflict
+				if temp_array && @user_array && (temp_array & @user_array).size() > 0
 					sortedProjects << [@projects[i].start_date.to_date,@projects[i].end_date.to_date]
 				end
+				
 			end
-		end
-		
-		#Sort this new array by start date
-		sortedProjects = sortedProjects.sort{|left,right| left[0].to_date <=> right[0].to_date}
-		
-		#Find where the new project fits in the schedule
-		(sortedProjects.size()-1).times do |i|
-			if (sortedProjects[i+1][0] - sortedProjects[i][1]).to_i >= duration
-				schedule_date = sortedProjects[i][1]
-				break
+			
+			#Sort array of conflicting projects by start date
+			sortedProjects = sortedProjects.sort{|left,right| left[0].to_date <=> right[0].to_date}
+			
+			#See if new project fits before schedule
+			if sortedProjects.size() > 0 && ((sortedProjects[0][0] - Time.current.to_date).to_i >= duration)
+				schedule_date = Time.current.to_date
+			else
+				#Find where the new project fits in the schedule
+				(sortedProjects.size()-1).times do |i|
+					if (sortedProjects[i+1][0] - sortedProjects[i][1]).to_i >= duration
+						schedule_date = sortedProjects[i][1]
+						break
+					end
+				end
+				
 			end
+			
+			#Check if it was scheduled above
+			if schedule_date == 0 && sortedProjects.size() > 0
+				schedule_date = sortedProjects[sortedProjects.size()-1][1]
+			elsif schedule_date == 0
+				schedule_date = Time.current.to_date
+			end
+			
+			#Set start date and end date
+			@project.start_date = schedule_date
+			@project.end_date = schedule_date + duration
+			
 		end
-		#Check if it was scheduled above
-		if schedule_date == 0 && sortedProjects.size() > 0
-			schedule_date = sortedProjects[sortedProjects.size()-1][1]
-		elsif schedule_date == 0
-			schedule_date = Time.current.to_date
-		end
-		
-		#Set start date and end date
-		@project.start_date = schedule_date
-		@project.end_date = schedule_date + duration
-		
-		# flash[:message] = "Automatically scheduled start and end date."
-		
-		#flash[:ben_message] = "Team member 0 is " + @user_array[0]
-		
-		#@form_value = params[:form_field] #form_field
-		#Automatically fill in appropriate form elements
-		#@form_value = "Livingstone Inc."
-		#@project.company = saved_params.company #This works, but it doesn't grab the project correctly
-		
-	  	#render :template => "projects/_form", :locals => {:project => @project}
-		#render 'edit'
 		
 	end
 	

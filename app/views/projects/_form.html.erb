@@ -14,6 +14,11 @@
       <!--<th onClick="document.location.href='/projects/new';" scope="col" id="newprojectlink"></th>-->
       <th scope="col" id="timelinelink"><%= link_to 'Timeline', projects_path(@projects)%></th>
       <th scope="col" id="newprojectlink"><%= link_to 'New Project', new_project_path(@projects)%></th>
+      <% if user_signed_in? %>
+        <!--Logged in as <strong>%= current_user.email %></strong>.-->
+       <th scope="col" id="newprojectlink"> <%= link_to 'Edit Profile', edit_user_registration_path, :class => 'navbar-link' %> </th>
+       <th scope="col" id="newprojectlink"> <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %></th>
+      <% end %> 
       <!--<th onClick="document.location.href='theteam.html';" scope="col" id="theteamlink"></th>-->
       <!--<th onClick="document.location.href='/projects/new';" scope="col" id="logoutlink"></th>-->
       </tr>
@@ -24,36 +29,40 @@
   <div id="newprojectbox">
   
    <%= form_for @project, as: :project, html: { class: "edit_project", id: "form1" } do |f| %>
-      <% if flash[:message] %>
-        <div class="notice"><%= flash[:message] %></div>
-      <% end %>
-      <% if flash[:ben_message] %>
-        <div class="notice">ben_message: <%= flash[:ben_message] %></div>
-      <% end %>
-         <% if @project.errors.any? %>
-          <div id="error_explanation">
-            <h2>
-              <%= pluralize(@project.errors.count, "error") %> prohibited
-              this project from being saved:
-            </h2>
-            <ul>
-              <% @project.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %> 
+      <br>
+      <!--% if flash[:message] %>-->
+      <!--  <div class="notice">%= flash[:message] %></div>-->
+      <!--% end %>-->
+      <!--% if flash[:ben_message] %>-->
+      <!--  <div class="notice">ben_message: %= flash[:ben_message] %></div>-->
+      <!--% end %>-->
+       <% if @project.errors.any? %>
+        <div id="error_explanation">
+          <h2>
+            <%= pluralize(@project.errors.count, "error") %> prohibited
+            this project from being saved:
+          </h2>
+          <ul>
+            <% @project.errors.full_messages.each do |msg| %>
+              <%= msg %>.
+              <br>
+            <% end %>
+          </ul>
+        </div>
+      <% end %> 
         
         
         <% if @user_array %>
          <% @user_array.each do |user| %>
+           <% if @users.exists?(:id => user) %>
             <%= hidden_field_tag 'assignees[]', user %>
+           <% end %>
          <% end %>
         <% end %>
     
        <%= hidden_field_tag :duration, "10" %>
-     <br>
-     <h3>NEW PROJECT</h3>
+     
+     <h6>NEW PROJECT</h6>
         <table align="center" width="25%" border="0">
           <tbody>
             <tr>
@@ -86,11 +95,15 @@
               <td align="left">Team Members:</td>
               <td align="left">
                 <!--% @assignments.each do |assign| %>-->
-                <% for x_user in @user_array do %>
-                  <label>
-                  <%= @users.find(x_user).last_name %>
-       		        <%= image_submit_tag("fileclose.png", :name =>'remove_member', :value => x_user, width: "16px", height: "16px") %><br>
-                  </label>
+                <% if @user_array %>
+                  <% for x_user in @user_array do %>
+                    <label>
+                      <% if @users.exists?(:id => x_user) %>
+                        <%= @users.find(x_user).last_name %>
+         		            <%= image_submit_tag("cancel-01.png", :name =>'remove_member', :value => x_user, width: "16px", height: "16px") %><br>
+                      <% end %>
+                    </label>
+                  <% end %>
                 <% end %>
               </td>
             </tr>
@@ -118,7 +131,7 @@
         <!--<input width="150px" height="40px" type="image" name="imageField" id="imageField" src="/assets/save-01.png">-->
       <!--</p>-->
       <p>
-      <%= f.submit nil, :type => :image, :src => "/assets/save-01.png", width: "150px", height: "40px" %>
+        <%= f.submit nil, :type => :image, :src => "/assets/save-01.png", width: "150px", height: "40px" %>
       </p>
     <% end %>
     <!--</form>-->

@@ -51,11 +51,11 @@ class Project < ActiveRecord::Base
     end
     
     def self.datestart(query)
-        where("start_date like ?", "%#{query}%")
+        where("start_date='#{query}'")
     end
     
     def self.dateend(query)
-        where("company like ?", "%#{query}%")
+        where("end_date='#{query}'")
     end
     
     has_many :assignments

@@ -1,3 +1,15 @@
 // Place all the styles related to the projects controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+@font-face {
+    font-family: 'robotoregular';
+    src: font-url('Roboto-Regular-webfont.eot');
+    src: font-url('Roboto-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('Roboto-Regular-webfont.woff') format('woff'),
+         font-url('Roboto-Regular-webfont.ttf') format('truetype'),
+         font-url('Roboto-Regular-webfont.svg#robotoregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}

@@ -18,7 +18,12 @@
 <div id="main">
 <!--<form id="form1" name="form1" method="post">-->
   <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "login_user", id: "form1" }) do |f| %>
-  
+  <% if notice %>
+    <p class="alert alert-success"><%= notice %></p>
+  <% end %>
+  <% if alert %>
+    <p class="alert alert-danger"><%= alert %></p>
+  <% end %>
   <br><br><table width="30%" border="0" align="center" id="logintable">
     <tbody>
       <tr>

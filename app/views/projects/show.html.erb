@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
-<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" type="text/css" href="/stylesheets/fonts.css">
 <title>New Project</title>
 
 </head>
@@ -21,6 +21,11 @@
     <tr>
       <th scope="col" id="timelinelink"><%= link_to 'Timeline', projects_path(@projects)%></th>
       <th scope="col" id="newprojectlink"><%= link_to 'New Project', new_project_path(@projects)%></th>
+      <% if user_signed_in? %>
+        <!--Logged in as <strong>%= current_user.email %></strong>.-->
+       <th scope="col" id="newprojectlink"> <%= link_to 'Edit Profile', edit_user_registration_path, :class => 'navbar-link' %> </th>
+       <th scope="col" id="newprojectlink"> <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %></th>
+      <% end %> 
     </tr>
   </tbody>
 </table>
@@ -28,27 +33,27 @@
 <div id="newprojectbox">
   <%= form_for @project, as: :project, html: { class: "edit_project", id: "form1" } do |f| %>
      <br>
-     <h3>VIEW PROJECT</h3>
+     <td><h6>VIEW PROJECT</h6></td>
         <table align="center" width="60%" border="0">
           <tbody>
             <tr>
-              <td align="left" scope="col"><strong>Project:</strong> </td>
+              <td align="right" scope="col"><strong>Project:</strong> </td>
               <td align="left" scope="col"><%= @project.title %></td>
               <!--<td align="left" scope="col">Project Name:</td>-->
               <!--<td align="left" scope="col"><input name="textfield" type="text" required id="textfield" size="16px"></td>-->
             </tr>
             <tr>
-              <td align="left" scope="col"><strong>Company:</strong> </td>
+              <td align="right" scope="col"><strong>Company:</strong> </td>
               <td align="left" scope="col"><%= @project.company %></td>
             </tr>
             <tr>  
-              <td align="left" scope="col"><strong>Start Date:</strong> </td>
+              <td align="right" scope="col"><strong>Start Date:</strong> </td>
               <td align="left" scope="col"><%= @project.start_date %></td>
               <!--<td align="left"><label for="date">Start Date:</label></td>-->
               <!--<td align="left"><input name="date"  type="date" required id="date"></td>-->
             </tr>
             <tr>
-              <td align="left" scope="col"><strong>End Date:</strong></td>
+              <td align="right" scope="col"><strong>End Date:</strong></td>
               <label for="textarea2"></label></td>
               <td align="left" scope="col"><%= @project.end_date %></td>
               <!--<td align="left"><label for="date3">End Date:</label>-->
@@ -56,18 +61,20 @@
               <!--<td align="left"><input name="date2" type="date" required id="date2"></td>-->
             </tr>
             <tr>
-              <td align="left" scope="col"><strong> Description:</strong> </td>
-              <td align="left"><%= @project.description %></td>
+              <td align="right" scope="col"><strong> Description:</strong> </td>
+              <td align="left" scope="col"><%= @project.description %></td>
               <!--<td align="left"><label for="textarea3">About Project:</label></td>-->
               <!--<td align="left"><textarea name="textarea" required id="textarea"></textarea></td>-->
             </tr>
             <tr>
-              <td align="left"><strong>Team Members:</strong></td>
+              <td align="right"><strong>Team Members:</strong></td>
               <td align="left">
                  <% @assignments.each do |assign| %>
                 <label>
                  
-                  <%= @users.find(assign.user_id).first_name %> <%= @users.find(assign.user_id).last_name %><br>
+                  <% if @users.exists?(:id => assign.user_id) %>
+                    <%= @users.find(assign.user_id).first_name %> <%= @users.find(assign.user_id).last_name %><br>
+       		        <% end %>
        		        <!--%= image_submit_tag("fileclose.png", :name =>'remove_member', :value => assign.id, width: "16px", height: "16px") %><br>-->
                 </label>
                 <% end %>
@@ -84,9 +91,10 @@
       </label>
       
       <p>
-        <%= link_to 'Edit', edit_project_path(@project) %>
+        <%= link_to image_tag("edit-01.png", width: "150px", height: "40px", align: "center"), edit_project_path(@project) %>
       </p>
-  		<p><%= link_to 'Destroy', project_path(@project),
+  		<p>
+  		  <%= link_to image_tag("delete-01.png", width: "150px", height: "40px", align: "center"), project_path(@project),
           method: :delete,
           data: { confirm: 'Are you sure?' } %>
       </p>

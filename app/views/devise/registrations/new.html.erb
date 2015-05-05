@@ -16,10 +16,10 @@
 </div><br><br>
 
 <div id="main">
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "edit_user", id: "form1" }) do |f| %>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "edit_user", id: "form_register" }) do |f| %>
 
 <br>
-<h3>NEW EMPLOYEE</h3>
+<h6>NEW EMPLOYEE</h6>
 
 <%= devise_error_messages! %>
 
@@ -49,13 +49,13 @@
       <td align="left" ><%= f.label :last_name %><br /></td>
       <td align="left" ><%= f.text_field :last_name, autofocus: true %></td>
     </tr>
-    <tr>
-      <td align="left" >Status:</td>
-      <td align="left" ><select name="select" required id="select">
-        <option>Full Time</option>
-        <option>Part Time</option>
-      </select></td>
-    </tr>
+    <!--<tr>-->
+    <!--  <td align="left" >Status:</td>-->
+    <!--  <td align="left" ><select name="select" required id="select">-->
+    <!--    <option>Full Time</option>-->
+    <!--    <option>Part Time</option>-->
+    <!--  </select></td>-->
+    <!--</tr>-->
   </tbody>
 </table>
 <br>
