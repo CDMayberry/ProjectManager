@@ -3,8 +3,6 @@
 <head>
 <meta charset="utf-8">
 <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
-<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto">
-
 </head>
 
 <body>
@@ -30,9 +28,9 @@
   </table>
 
 <div id="main">
-<p>
+
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "edit_user", id: "form_register"  }) do |f| %>
-  
+  <br>
   <h2>Edit <%= resource_name.to_s.humanize %></h2>
   
   <%= devise_error_messages! %>
@@ -41,48 +39,48 @@
     <%= f.label :email %><br />
     <%= f.email_field :email, autofocus: true %>
   </div>
-  
+    <br>
   <div class="field">
-    <%= f.label :first_name %>
-    <em>(2 characters minimum) </em><br />
+    <%= f.label :first_name %><br>
+    
     <%= f.text_field :first_name%>
   </div>
-  
+    <br>
   <div class="field">
-    <%= f.label :last_name %>
-    <em>(2 characters minimum )</em><br />
+    <%= f.label :last_name %><br>
     <%= f.text_field :last_name%>
   </div>
-
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
-
+  <br>
   <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+    <%= f.label :password %> <i>
+      <br><h7>*leave blank if you don't want to change it</h7></i><br />
     <%= f.password_field :password, autocomplete: "off" %>
   </div>
-
+  <br>
   <div class="field">
     <%= f.label :password_confirmation %><br />
     <%= f.password_field :password_confirmation, autocomplete: "off" %>
   </div>
-
+  <br>
   <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+    <%= f.label :current_password %> <br />
     <%= f.password_field :current_password, autocomplete: "off" %>
   </div>
-
+  <br>
   <div class="actions">
-    <%= button_to "Update", registration_path(resource_name), method: :update %>
+    <%= f.submit "Update" %>
   </div>
-  
-  <h5>Cancel my account?</h5>
+  <br>
 
-  <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %>
-  
 <% end %>
-</p>
+<div class="actions" id = "form_register">
+  <%= button_to "Delete Account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %>
+  <br>
+</div>
+
 </div>
 </body>
 </html>

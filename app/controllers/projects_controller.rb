@@ -136,7 +136,8 @@ class ProjectsController < ApplicationController
 				end
 				
 				#If members overlap with new project, consider it a conflict
-				if temp_array && @user_array && (temp_array & @user_array).size() > 0
+				#Also only consider projcets with end dates in the future
+				if temp_array && @user_array && (temp_array & @user_array).size() > 0 && @projects[i].end_date.to_date > Time.current.to_date
 					sortedProjects << [@projects[i].start_date.to_date,@projects[i].end_date.to_date]
 				end
 				

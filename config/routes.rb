@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   }
   resources :projects
   resources :assignments
-  resources :users, only: [:index, :show]
+  resources :users, only: [:show, :edit, :update]
 
   #get 'pages/index'
   root 'projects#index'
